@@ -40,7 +40,7 @@ class DesbloqueioCursoTest {
         );
 
         // THEN - entao o curso nao e liberado e o aviso e exibido
-        assertEquals("Creditos insuficientes", erro.getMessage());
+        assertEquals(Assinatura.MENSAGEM_CREDITOS_INSUFICIENTES, erro.getMessage());
         assertTrue(usuario.getMatriculas().isEmpty());
     }
 }

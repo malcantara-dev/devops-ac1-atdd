@@ -1,7 +1,7 @@
 package org.example.grupo_7_praticaatdd.domain;
 
 public class Assinatura {
-
+    public static final String MENSAGEM_CREDITOS_INSUFICIENTES = "Creditos insuficientes";
     private int creditosCursos = 0;
     private int cursosConcluidosComSucesso = 0;
 
@@ -23,7 +23,7 @@ public class Assinatura {
 
     public void consumirCredito() {
         if (this.creditosCursos < 1) {
-            throw new IllegalStateException("Creditos insuficientes");
+            throw new IllegalStateException(MENSAGEM_CREDITOS_INSUFICIENTES);
         }
         this.creditosCursos = this.creditosCursos - 1;
     }
