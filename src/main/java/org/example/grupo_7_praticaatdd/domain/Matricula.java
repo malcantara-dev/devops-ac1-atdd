@@ -52,5 +52,6 @@ public class Matricula {
 
     // TODO Rafael - cenario 4
     public void registrarNotaParcial(double nota) {
+        this.notaParcial = nota;
     }
 }

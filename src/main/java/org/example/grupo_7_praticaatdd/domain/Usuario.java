@@ -36,7 +36,9 @@ public class Usuario {
 
     // TODO Rafael - cenario 3
     public Matricula matricularEm(Curso curso) {
-        return null;
+        Matricula matricula = new Matricula(this, curso, false);
+        adicionarMatricula(matricula);
+        return matricula;
     }
 
     // TODO Henrique - cenarios 5 e 6
