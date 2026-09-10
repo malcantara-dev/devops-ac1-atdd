@@ -2,6 +2,8 @@ package org.example.grupo_7_praticaatdd.domain;
 
 public class Matricula {
 
+    public static final double NOTA_MINIMA_APROVACAO = 7.0;
+
     private final Usuario usuario;
     private final Curso curso;
     private final boolean bonus;
@@ -41,13 +43,14 @@ public class Matricula {
         return notaParcial;
     }
 
-    // TODO Alcantara - cenarios 1 e 2
     public void concluir(double notaFinal) {
+        this.notaFinal = notaFinal;
+        this.status = StatusMatricula.CONCLUIDO;
     }
 
-    // TODO Alcantara - cenarios 1 e 2
     public boolean concluidoComAproveitamento() {
-        return false;
+        return this.status == StatusMatricula.CONCLUIDO
+                && this.notaFinal >= NOTA_MINIMA_APROVACAO;
     }
 
     // TODO Rafael - cenario 4
