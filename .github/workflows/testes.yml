@@ -32,3 +32,11 @@ jobs:
           name: relatorio-testes-${{ github.run_number }}
           path: target/surefire-reports/
           if-no-files-found: ignore
+
+      - name: Guardar o relatorio de cobertura JaCoCo
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cobertura-jacoco-${{ github.run_number }}
+          path: target/site/jacoco/
+          if-no-files-found: ignore
