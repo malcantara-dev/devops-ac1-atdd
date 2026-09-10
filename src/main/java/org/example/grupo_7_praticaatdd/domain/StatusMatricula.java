@@ -1,4 +1,6 @@
 package org.example.grupo_7_praticaatdd.domain;
 
-public class StatusMatricula {
+public enum StatusMatricula {
+    EM_ANDAMENTO,
+    CONCLUIDO
 }
