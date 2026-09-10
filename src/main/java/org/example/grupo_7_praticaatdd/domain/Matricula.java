@@ -41,13 +41,13 @@ public class Matricula {
         return notaParcial;
     }
 
-    // TODO Alcantara - cenarios 1 e 2
     public void concluir(double notaFinal) {
+        this.notaFinal = notaFinal;
+        this.status = StatusMatricula.CONCLUIDO;
     }
 
-    // TODO Alcantara - cenarios 1 e 2
     public boolean concluidoComAproveitamento() {
-        return false;
+        return this.status == StatusMatricula.CONCLUIDO && this.notaFinal >= 7.0;
     }
 
     // TODO Rafael - cenario 4

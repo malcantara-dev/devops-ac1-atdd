@@ -17,8 +17,9 @@ public class Assinatura {
         this.creditosCursos = this.creditosCursos + quantidade;
     }
 
-    // TODO Alcantara - cenario 1
     public void registrarConclusaoComSucesso() {
+        this.cursosConcluidosComSucesso = this.cursosConcluidosComSucesso + 1;
+        adicionarCreditos(3);
     }
 
     // TODO Henrique - cenarios 5 e 6
