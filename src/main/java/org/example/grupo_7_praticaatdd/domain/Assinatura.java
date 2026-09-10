@@ -21,7 +21,10 @@ public class Assinatura {
     public void registrarConclusaoComSucesso() {
     }
 
-    // TODO Henrique - cenarios 5 e 6
     public void consumirCredito() {
+        if (this.creditosCursos < 1) {
+            throw new IllegalStateException("Creditos insuficientes");
+        }
+        this.creditosCursos = this.creditosCursos - 1;
     }
 }
