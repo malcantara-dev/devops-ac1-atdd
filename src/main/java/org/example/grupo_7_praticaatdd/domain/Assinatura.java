@@ -2,6 +2,8 @@ package org.example.grupo_7_praticaatdd.domain;
 
 public class Assinatura {
 
+    public static final int CREDITOS_POR_CONCLUSAO = 3;
+
     private int creditosCursos = 0;
     private int cursosConcluidosComSucesso = 0;
 
@@ -19,7 +21,7 @@ public class Assinatura {
 
     public void registrarConclusaoComSucesso() {
         this.cursosConcluidosComSucesso = this.cursosConcluidosComSucesso + 1;
-        adicionarCreditos(3);
+        adicionarCreditos(CREDITOS_POR_CONCLUSAO);
     }
 
     // TODO Henrique - cenarios 5 e 6
