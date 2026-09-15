@@ -55,5 +55,10 @@ public class Matricula {
 
     // TODO Rafael - cenario 4
     public void registrarNotaParcial(double nota) {
+        this.notaParcial = nota;
+    }
+
+    public boolean estaEmAndamento() {
+        return this.status == StatusMatricula.EM_ANDAMENTO;
     }
 }
