@@ -30,13 +30,18 @@ public class Usuario {
         this.matriculas.add(matricula);
     }
 
-    // TODO Alcantara - cenarios 1 e 2
     public void concluirCurso(Matricula matricula, double notaFinal) {
+        matricula.concluir(notaFinal);
+        if (matricula.concluidoComAproveitamento()) {
+            this.assinatura.registrarConclusaoComSucesso();
+        }
     }
 
     // TODO Rafael - cenario 3
     public Matricula matricularEm(Curso curso) {
-        return null;
+        Matricula matricula = new Matricula(this, curso, false);
+        adicionarMatricula(matricula);
+        return matricula;
     }
 
     public void desbloquearCurso(Curso curso) {
