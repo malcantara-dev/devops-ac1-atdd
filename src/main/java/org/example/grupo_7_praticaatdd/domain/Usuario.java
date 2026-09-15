@@ -44,7 +44,8 @@ public class Usuario {
         return matricula;
     }
 
-    // TODO Henrique - cenarios 5 e 6
     public void desbloquearCurso(Curso curso) {
+        this.assinatura.consumirCredito();
+        adicionarMatricula(new Matricula(this, curso, true));
     }
 }

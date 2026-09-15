@@ -1,6 +1,7 @@
 package org.example.grupo_7_praticaatdd.domain;
 
 public class Assinatura {
+    public static final String MENSAGEM_CREDITOS_INSUFICIENTES = "Creditos insuficientes";
 
     public static final int CREDITOS_POR_CONCLUSAO = 3;
 
@@ -24,7 +25,10 @@ public class Assinatura {
         adicionarCreditos(CREDITOS_POR_CONCLUSAO);
     }
 
-    // TODO Henrique - cenarios 5 e 6
     public void consumirCredito() {
+        if (this.creditosCursos < 1) {
+            throw new IllegalStateException(MENSAGEM_CREDITOS_INSUFICIENTES);
+        }
+        this.creditosCursos = this.creditosCursos - 1;
     }
 }
