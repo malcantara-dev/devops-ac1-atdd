@@ -3,6 +3,7 @@ package org.example.grupo_7_praticaatdd.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 class CursoEmAndamentoTest {
@@ -19,7 +20,7 @@ class CursoEmAndamentoTest {
 
         // THEN - entao existe 1 matricula em andamento e 0 creditos
         assertEquals(1, usuario.getMatriculas().size());
-        assertEquals(StatusMatricula.EM_ANDAMENTO, usuario.getMatriculas().get(0).getStatus());
+        assertTrue(usuario.getMatriculas().get(0).estaEmAndamento());
         assertEquals(0, usuario.getAssinatura().getCreditosCursos());
     }
 
@@ -36,7 +37,7 @@ class CursoEmAndamentoTest {
 
         // THEN - entao a nota fica guardada, o curso segue em andamento e nao ha credito
         assertEquals(8.0, matricula.getNotaParcial());
-        assertEquals(StatusMatricula.EM_ANDAMENTO, matricula.getStatus());
+        assertTrue(matricula.estaEmAndamento());
         assertEquals(0, usuario.getAssinatura().getCreditosCursos());
     }
 }

@@ -54,4 +54,8 @@ public class Matricula {
     public void registrarNotaParcial(double nota) {
         this.notaParcial = nota;
     }
+
+    public boolean estaEmAndamento() {
+        return this.status == StatusMatricula.EM_ANDAMENTO;
+    }
 }
