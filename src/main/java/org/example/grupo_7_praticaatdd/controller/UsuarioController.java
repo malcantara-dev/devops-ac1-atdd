@@ -1,5 +1,7 @@
 package org.example.grupo_7_praticaatdd.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.example.grupo_7_praticaatdd.dto.UsuarioRequestDTO;
 import org.example.grupo_7_praticaatdd.dto.UsuarioResponseDTO;
@@ -18,6 +20,7 @@ import java.util.List;
 // Camada CONTROLLER: recebe HTTP, chama o service e devolve JSON.
 @RestController
 @RequestMapping("/api/usuarios")
+@Tag(name = "Usuarios")
 public class UsuarioController {
 
     private final UsuarioService service;
@@ -27,11 +30,13 @@ public class UsuarioController {
     }
 
     @GetMapping
+    @Operation(summary = "Listar usuarios")
     public List<UsuarioResponseDTO> listar() {
         return service.listarTodos();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar usuario por id")
     public UsuarioResponseDTO buscar(@PathVariable Long id) {
         return service.buscarPorId(id);
     }
@@ -39,6 +44,7 @@ public class UsuarioController {
     // @Valid dispara as validacoes declaradas no DTO antes de chegar no service.
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Criar usuario com assinatura basica")
     public UsuarioResponseDTO criar(@Valid @RequestBody UsuarioRequestDTO dto) {
         return service.criar(dto);
     }

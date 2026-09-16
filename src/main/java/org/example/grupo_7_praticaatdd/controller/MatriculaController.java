@@ -1,5 +1,7 @@
 package org.example.grupo_7_praticaatdd.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.example.grupo_7_praticaatdd.dto.ConcluirMatriculaRequestDTO;
 import org.example.grupo_7_praticaatdd.dto.MatriculaRequestDTO;
@@ -19,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/matriculas")
+@Tag(name = "Matriculas")
 public class MatriculaController {
 
     private final MatriculaService service;
@@ -29,18 +32,21 @@ public class MatriculaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Matricular usuario em um curso")
     public MatriculaResponseDTO matricular(@Valid @RequestBody MatriculaRequestDTO dto) {
         return service.matricular(dto.getUsuarioId(), dto.getCursoId(), dto.isBonus());
     }
 
     // @PathVariable pega o id direto da URL.
     @PutMapping("/{id}/concluir")
+    @Operation(summary = "Concluir matricula com a nota final")
     public MatriculaResponseDTO concluir(@PathVariable Long id,
                                          @Valid @RequestBody ConcluirMatriculaRequestDTO dto) {
         return service.concluir(id, dto.getNotaFinal());
     }
 
     @GetMapping("/usuario/{usuarioId}")
+    @Operation(summary = "Listar matriculas de um usuario")
     public List<MatriculaResponseDTO> listarPorUsuario(@PathVariable Long usuarioId) {
         return service.listarPorUsuario(usuarioId);
     }

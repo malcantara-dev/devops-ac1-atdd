@@ -1,5 +1,7 @@
 package org.example.grupo_7_praticaatdd.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.example.grupo_7_praticaatdd.dto.CursoRequestDTO;
 import org.example.grupo_7_praticaatdd.dto.CursoResponseDTO;
@@ -16,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/cursos")
+@Tag(name = "Cursos")
 public class CursoController {
 
     private final CursoService service;
@@ -25,12 +28,14 @@ public class CursoController {
     }
 
     @GetMapping
+    @Operation(summary = "Listar cursos")
     public List<CursoResponseDTO> listar() {
         return service.listarTodos();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Criar curso")
     public CursoResponseDTO criar(@Valid @RequestBody CursoRequestDTO dto) {
         return service.criar(dto);
     }
