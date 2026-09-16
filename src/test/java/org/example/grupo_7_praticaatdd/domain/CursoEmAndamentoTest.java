@@ -12,7 +12,7 @@ class CursoEmAndamentoTest {
     @DisplayName("Cenario 3 - um curso em andamento e nenhum finalizado mantem 0 creditos")
     void naoDeveTerCreditoComApenasUmCursoEmAndamento() {
         // GIVEN - dado um usuario novo e um curso
-        Usuario usuario = new Usuario("Carla");
+        Usuario usuario = new Usuario("Rafael", "rafael@email.com", "senha123");
         Curso curso = new Curso("Java Basico");
 
         // WHEN - quando ele se matricula e nao finaliza nada
@@ -28,7 +28,7 @@ class CursoEmAndamentoTest {
     @DisplayName("Cenario 4 - media parcial boa sem finalizar o curso nao gera credito")
     void naoDeveAdicionarCreditoComNotaParcialBoaSemFinalizar() {
         // GIVEN - dado um usuario com um curso em andamento
-        Usuario usuario = new Usuario("Diego");
+        Usuario usuario = new Usuario("Rafael", "rafael@email.com", "senha123");
         Curso curso = new Curso("Java Basico");
         Matricula matricula = new Matricula(usuario, curso, false);
 

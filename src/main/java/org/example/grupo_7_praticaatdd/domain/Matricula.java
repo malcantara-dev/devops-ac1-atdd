@@ -1,22 +1,61 @@
 package org.example.grupo_7_praticaatdd.domain;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "matriculas")
 public class Matricula {
 
     public static final double NOTA_MINIMA_APROVACAO = 7.0;
 
-    private final Usuario usuario;
-    private final Curso curso;
-    private final boolean bonus;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    // fetch LAZY carrega o usuario apenas quando ele for realmente acessado.
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "curso_id")
+    private Curso curso;
+
+    @Column(nullable = false)
+    private boolean bonus;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private StatusMatricula status;
+
+    @Column(nullable = false)
     private double notaFinal;
+
+    @Column(nullable = false)
     private double notaParcial;
+
+    protected Matricula() {
+    }
 
     public Matricula(Usuario usuario, Curso curso, boolean bonus) {
         this.usuario = usuario;
         this.curso = curso;
         this.bonus = bonus;
         this.status = StatusMatricula.EM_ANDAMENTO;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public Usuario getUsuario() {
@@ -53,7 +92,6 @@ public class Matricula {
                 && this.notaFinal >= NOTA_MINIMA_APROVACAO;
     }
 
-    // TODO Rafael - cenario 4
     public void registrarNotaParcial(double nota) {
         this.notaParcial = nota;
     }

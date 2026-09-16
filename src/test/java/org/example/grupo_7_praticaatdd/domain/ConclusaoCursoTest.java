@@ -11,7 +11,7 @@ class ConclusaoCursoTest {
     @DisplayName("Cenario 1 - curso concluido com nota maior ou igual a 7 gera 3 creditos")
     void deveAdicionarTresCreditosQuandoConcluirCursoComNotaAlta() {
         // GIVEN - dado um usuario com um curso em andamento
-        Usuario usuario = new Usuario("Ana");
+        Usuario usuario = new Usuario("Matheus", "matheus@email.com", "senha123");
         Curso curso = new Curso("Spring Boot Fundamentos");
         Matricula matricula = new Matricula(usuario, curso, false);
 
@@ -27,7 +27,7 @@ class ConclusaoCursoTest {
     @DisplayName("Cenario 2 - curso concluido com nota menor que 7 nao gera credito")
     void naoDeveAdicionarCreditoQuandoConcluirCursoComNotaBaixa() {
         // GIVEN - dado um usuario com um curso em andamento
-        Usuario usuario = new Usuario("Bruno");
+        Usuario usuario = new Usuario("Matheus", "matheus@email.com", "senha123");
         Curso curso = new Curso("Spring Boot Fundamentos");
         Matricula matricula = new Matricula(usuario, curso, false);
 

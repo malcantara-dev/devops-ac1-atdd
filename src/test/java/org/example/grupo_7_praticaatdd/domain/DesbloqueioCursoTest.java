@@ -13,7 +13,7 @@ class DesbloqueioCursoTest {
     @DisplayName("Cenario 5 - com 1 credito o curso e liberado e o credito e consumido")
     void deveLiberarCursoEConsumirCreditoQuandoTemCredito() {
         // GIVEN - dado um usuario com 1 credito e um curso nao adquirido
-        Usuario usuario = new Usuario("Elisa");
+        Usuario usuario = new Usuario("Henrique", "henrique@email.com", "senha123");
         usuario.getAssinatura().adicionarCreditos(1);
         Curso curso = new Curso("Java Avancado");
 
@@ -30,7 +30,7 @@ class DesbloqueioCursoTest {
     @DisplayName("Cenario 6 - sem credito o curso nao e liberado e avisa creditos insuficientes")
     void naoDeveLiberarCursoQuandoNaoTemCredito() {
         // GIVEN - dado um usuario sem nenhum credito e um curso nao adquirido
-        Usuario usuario = new Usuario("Fabio");
+        Usuario usuario = new Usuario("Henrique", "henrique@email.com", "senha123");
         Curso curso = new Curso("Java Avancado");
 
         // WHEN - quando ele solicita o desbloqueio deste curso

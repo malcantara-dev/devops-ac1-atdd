@@ -1,21 +1,73 @@
 package org.example.grupo_7_praticaatdd.domain;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import org.example.grupo_7_praticaatdd.domain.VO.EmailUsuario;
+import org.example.grupo_7_praticaatdd.domain.VO.NomeUsuario;
+import org.example.grupo_7_praticaatdd.domain.VO.SenhaCriptografada;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "usuarios")
 public class Usuario {
 
-    private final String nome;
-    private final Assinatura assinatura;
-    private final List<Matricula> matriculas = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    public Usuario(String nome) {
-        this.nome = nome;
+    @Embedded
+    private NomeUsuario nome;
+
+    @Embedded
+    private EmailUsuario email;
+
+    @Embedded
+    private SenhaCriptografada senha;
+
+    // O usuario e o dono do relacionamento, entao a FK fica na tabela de usuarios.
+    // cascade = ALL salva a assinatura junto com o usuario.
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "assinatura_id")
+    private Assinatura assinatura;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Matricula> matriculas = new ArrayList<>();
+
+    protected Usuario() {
+    }
+
+    // A senha recebida aqui ja deve chegar criptografada pela camada de service.
+    public Usuario(String nome, String email, String senhaCriptografada) {
+        this.nome = new NomeUsuario(nome);
+        this.email = new EmailUsuario(email);
+        this.senha = new SenhaCriptografada(senhaCriptografada);
         this.assinatura = new Assinatura();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getNome() {
-        return nome;
+        return nome.getValor();
+    }
+
+    public String getEmail() {
+        return email.getValor();
+    }
+
+    public String getSenha() {
+        return senha.getValor();
     }
 
     public Assinatura getAssinatura() {
@@ -30,6 +82,12 @@ public class Usuario {
         this.matriculas.add(matricula);
     }
 
+    public Matricula matricularEm(Curso curso) {
+        Matricula matricula = new Matricula(this, curso, false);
+        adicionarMatricula(matricula);
+        return matricula;
+    }
+
     public void concluirCurso(Matricula matricula, double notaFinal) {
         matricula.concluir(notaFinal);
         if (matricula.concluidoComAproveitamento()) {
@@ -37,15 +95,10 @@ public class Usuario {
         }
     }
 
-    // TODO Rafael - cenario 3
-    public Matricula matricularEm(Curso curso) {
-        Matricula matricula = new Matricula(this, curso, false);
+    public Matricula desbloquearCurso(Curso curso) {
+        this.assinatura.consumirCredito();
+        Matricula matricula = new Matricula(this, curso, true);
         adicionarMatricula(matricula);
         return matricula;
-    }
-
-    public void desbloquearCurso(Curso curso) {
-        this.assinatura.consumirCredito();
-        adicionarMatricula(new Matricula(this, curso, true));
     }
 }
