@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Educacao Continuada Gamificada - Grupo 7</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div id="app" class="container">
+    <h1>Educação Continuada Gamificada</h1>
+    <p>Grupo 7 - front-end em Vue.js consumindo a API Spring Boot</p>
+
+    <p v-if="mensagem">{{ mensagem }}</p>
+
+    <div class="grid">
+        <div class="card">
+            <h2>Usuários</h2>
+            <input v-model="novoUsuario.nome" placeholder="Nome">
+            <input v-model="novoUsuario.email" placeholder="E-mail">
+            <input v-model="novoUsuario.senha" type="password" placeholder="Senha">
+            <button @click="criarUsuario">Criar usuário</button>
+            <ul>
+                <li v-for="u in usuarios" :key="u.id">
+                    {{ u.id }} - {{ u.nome }} | {{ u.plano }} |
+                    {{ u.creditosCursos }} crédito(s) |
+                    {{ u.cursosConcluidosComSucesso }} concluído(s)
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Cursos</h2>
+            <input v-model="novoCurso.titulo" placeholder="Título do curso">
+            <textarea v-model="novoCurso.descricao" placeholder="Descrição (opcional)"></textarea>
+            <button @click="criarCurso">Criar curso</button>
+            <ul>
+                <li v-for="c in cursos" :key="c.id">{{ c.id }} - {{ c.titulo }}</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Matricular</h2>
+            <select v-model="novaMatricula.usuarioId">
+                <option disabled value="">Selecione o usuário</option>
+                <option v-for="u in usuarios" :key="u.id" :value="u.id">{{ u.nome }}</option>
+            </select>
+            <select v-model="novaMatricula.cursoId">
+                <option disabled value="">Selecione o curso</option>
+                <option v-for="c in cursos" :key="c.id" :value="c.id">{{ c.titulo }}</option>
+            </select>
+            <label>
+                <input type="checkbox" v-model="novaMatricula.bonus">
+                Usar crédito de curso gratuito (bônus)
+            </label>
+            <button @click="matricular">Matricular</button>
+        </div>
+
+        <div class="card">
+            <h2>Matrículas do usuário</h2>
+            <select v-model="usuarioSelecionado" @change="listarMatriculas">
+                <option disabled value="">Selecione o usuário</option>
+                <option v-for="u in usuarios" :key="u.id" :value="u.id">{{ u.nome }}</option>
+            </select>
+            <ul>
+                <li v-for="m in matriculas" :key="m.id">
+                    {{ m.cursoTitulo }} - {{ m.status }}
+                    <template v-if="m.status === 'EM_ANDAMENTO'">
+                        <input type="number" min="0" max="10" step="0.5"
+                               v-model.number="notas[m.id]" placeholder="Nota final">
+                        <button @click="concluir(m.id)">Concluir</button>
+                    </template>
+                    <span v-else>| nota {{ m.notaFinal }}</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+const { createApp } = Vue;
+
+createApp({
+    data() {
+        return {
+            usuarios: [],
+            cursos: [],
+            matriculas: [],
+            notas: {},
+            usuarioSelecionado: '',
+            mensagem: '',
+            novoUsuario: { nome: '', email: '', senha: '' },
+            novoCurso: { titulo: '', descricao: '' },
+            novaMatricula: { usuarioId: '', cursoId: '', bonus: false }
+        };
+    },
+    // Assim que a tela abre, ja carrega usuarios e cursos da API.
+    mounted() {
+        this.listarUsuarios();
+        this.listarCursos();
+    },
+    methods: {
+        async api(caminho, opcoes = {}) {
+            const resposta = await fetch('/api' + caminho, {
+                headers: { 'Content-Type': 'application/json' },
+                ...opcoes
+            });
+            const texto = await resposta.text();
+            const corpo = texto ? JSON.parse(texto) : null;
+
+            if (!resposta.ok) {
+                // O ApiExceptionHandler devolve "erro" ou o mapa "erros" das validacoes.
+                const validacoes = Object.values((corpo && corpo.erros) || {}).join(', ');
+                throw new Error((corpo && corpo.erro) || validacoes || 'Erro na requisição');
+            }
+            return corpo;
+        },
+        async executar(acao, textoSucesso) {
+            try {
+                await acao();
+                this.mensagem = textoSucesso;
+            } catch (e) {
+                this.mensagem = e.message;
+            }
+        },
+        async listarUsuarios() {
+            this.usuarios = await this.api('/usuarios');
+        },
+        async listarCursos() {
+            this.cursos = await this.api('/cursos');
+        },
+        async listarMatriculas() {
+            if (!this.usuarioSelecionado) return;
+            this.matriculas = await this.api('/matriculas/usuario/' + this.usuarioSelecionado);
+        },
+        criarUsuario() {
+            return this.executar(async () => {
+                await this.api('/usuarios', { method: 'POST', body: JSON.stringify(this.novoUsuario) });
+                this.novoUsuario = { nome: '', email: '', senha: '' };
+                await this.listarUsuarios();
+            }, 'Usuário criado com assinatura básica');
+        },
+        criarCurso() {
+            return this.executar(async () => {
+                await this.api('/cursos', { method: 'POST', body: JSON.stringify(this.novoCurso) });
+                this.novoCurso = { titulo: '', descricao: '' };
+                await this.listarCursos();
+            }, 'Curso criado');
+        },
+        matricular() {
+            return this.executar(async () => {
+                await this.api('/matriculas', { method: 'POST', body: JSON.stringify(this.novaMatricula) });
+                await this.listarUsuarios();
+                await this.listarMatriculas();
+            }, 'Matrícula realizada');
+        },
+        concluir(matriculaId) {
+            return this.executar(async () => {
+                await this.api('/matriculas/' + matriculaId + '/concluir', {
+                    method: 'PUT',
+                    body: JSON.stringify({ notaFinal: this.notas[matriculaId] })
+                });
+                await this.listarUsuarios();
+                await this.listarMatriculas();
+            }, 'Curso concluído. Nota >= 7 gera 3 créditos.');
+        }
+    }
+}).mount('#app');
+</script>
+</body>
+</html>

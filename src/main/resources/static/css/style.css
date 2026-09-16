@@ -1,0 +1,13 @@
+body { font-family: Arial, sans-serif; background: #f4f6f8; padding: 24px; }
+
+.container { max-width: 900px; margin: auto; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+.card { background: #fff; padding: 20px; border-radius: 10px; }
+
+input, textarea, select, button { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; }
+
+ul { padding-left: 18px; }
+
+li { margin-bottom: 8px; }
