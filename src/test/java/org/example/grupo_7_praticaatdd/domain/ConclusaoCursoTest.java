@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class ConclusaoCursoTest {
 
@@ -21,6 +22,10 @@ class ConclusaoCursoTest {
         // THEN - entao o curso fica concluido e 3 creditos sao acrescentados
         assertEquals(StatusMatricula.CONCLUIDO, matricula.getStatus());
         assertEquals(3, usuario.getAssinatura().getCreditosCursos());
+        assertEquals(8.0, matricula.getNotaFinal());
+        assertEquals(1, usuario.getAssinatura().getCursosConcluidosComSucesso());
+        assertFalse(matricula.isBonus());
+        assertFalse(matricula.estaEmAndamento());
     }
 
     @Test

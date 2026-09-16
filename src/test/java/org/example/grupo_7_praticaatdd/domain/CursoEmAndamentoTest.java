@@ -3,6 +3,7 @@ package org.example.grupo_7_praticaatdd.domain;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
@@ -16,12 +17,15 @@ class CursoEmAndamentoTest {
         Curso curso = new Curso("Java Basico");
 
         // WHEN - quando ele se matricula e nao finaliza nada
-        usuario.matricularEm(curso);
+        Matricula matricula = usuario.matricularEm(curso);
 
         // THEN - entao existe 1 matricula em andamento e 0 creditos
         assertEquals(1, usuario.getMatriculas().size());
         assertTrue(usuario.getMatriculas().get(0).estaEmAndamento());
         assertEquals(0, usuario.getAssinatura().getCreditosCursos());
+        assertEquals("Carla", matricula.getUsuario().getNome());
+        assertEquals("Java Basico", matricula.getCurso().getTitulo());
+        assertFalse(matricula.concluidoComAproveitamento());
     }
 
     @Test
