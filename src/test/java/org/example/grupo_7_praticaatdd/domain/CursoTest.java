@@ -30,7 +30,6 @@ class CursoTest {
     @Test
     @DisplayName("Curso montado pelo JPA sem descricao nao deve quebrar")
     void naoDeveQuebrarQuandoOJpaNaoPreencherADescricao() {
-        // O JPA usa o construtor vazio e deixa o @Embedded nulo quando a coluna esta vazia.
         Curso curso = new Curso();
 
         assertNull(curso.getDescricao());

@@ -1,14 +1,14 @@
-# Educação Continuada Gamificada — Grupo 7
+# AC1 ATDD Grupo 7
 
-Projeto final de ATDD (BDD + TDD) com Spring Boot, desenvolvido a partir do estudo de caso
+Projeto AC1 de ATDD com Spring Boot, desenvolvido a partir do estudo de caso
 **Gamificação para Engajamento de Educação Continuada**.
 
 | | |
 |---|---|
-| **Integrantes** | Matheus de Alcantara, Henrique, Rafael |
+| **Integrantes** | Matheus de Alcantara, Henrique Bicudo, Rafael Silva |
 | **Stack** | Java 17, Spring Boot 3.5.5, Spring Data JPA, H2, PostgreSQL, Vue.js 3 |
-| **Testes** | JUnit 5 + JaCoCo (100% de cobertura do domínio) |
-| **Infra** | Docker, Docker Compose, pgAdmin, GitHub Actions |
+| **Testes** | JUnit 5 + JaCoCo |
+| **Infra** | Docker Desktop, pgAdmin, GitHub Actions |
 
 ---
 
@@ -33,8 +33,8 @@ As três US estão versionadas na planilha [Tabela_US_BDD_TDD.xlsx](Tabela_US_BD
 | # | Redigida por | User Story |
 |---|---|---|
 | US1 | **Matheus de Alcantara** | COMO Usuário/Aluno, QUERO visualizar quais cursos tenho acesso no meu plano atual, PARA acessá-los e realizá-los. |
-| US2 | **Henrique** | COMO Usuário/Aluno, QUERO visualizar as notas médias dos meus cursos concluídos, PARA verificar se tenho direito a mais 3 cursos gratuitos. |
-| US3 | **Rafael** | COMO Usuário/Aluno, QUERO visualizar a quantidade de cursos concluídos, PARA verificar meu progresso da melhoria gratuita para o plano Premium. |
+| US2 | **Henrique Bicudo** | COMO Usuário/Aluno, QUERO visualizar as notas médias dos meus cursos concluídos, PARA verificar se tenho direito a mais 3 cursos gratuitos. |
+| US3 | **Rafael Silva** | COMO Usuário/Aluno, QUERO visualizar a quantidade de cursos concluídos, PARA verificar meu progresso da melhoria gratuita para o plano Premium. |
 
 ### US escolhida para implementação
 
@@ -43,12 +43,12 @@ As três US estão versionadas na planilha [Tabela_US_BDD_TDD.xlsx](Tabela_US_BD
 > PARA verificar se tenho direito a mais 3 cursos gratuitos.*
 
 Foi a escolhida porque é a que concentra a regra central do estudo de caso: **curso concluído com
-nota maior ou igual a 7 dá direito a mais 3 cursos**. Os seis cenários BDD partem dessa regra —
-quatro tratam de ganhar e guardar créditos, e dois tratam de gastá-los ao desbloquear um curso.
+nota maior ou igual a 7 dá direito a mais 3 cursos**. Os seis cenários BDD partem dessa regra,
+quatro tratam de ganhar e guardar créditos e dois tratam de gastá-los ao desbloquear um curso.
 
 ---
 
-## 3. Cenários BDD — dois por integrante
+## 3. Cenários BDD (fizemos dois por integrante)
 
 | Cenário | Escrito por | BDD |
 |---|---|---|
@@ -69,12 +69,12 @@ Cada cenário virou um teste JUnit na pasta de domínio:
 
 ---
 
-## 4. Ciclo TDD — RED, GREEN, BLUE
+## 4. Ciclo TDD (RED -> GREEN -> BLUE)
 
 O ciclo foi feito cenário a cenário, e cada passo tem commit próprio no histórico do Git.
 Os prints estão em [printsTestes/](printsTestes/), separados por integrante.
 
-### RED — testes escritos primeiro, falhando
+### RED - testes escritos primeiro, falhando
 
 | Integrante | Cenários | Evidência |
 |---|---|---|
@@ -82,7 +82,7 @@ Os prints estão em [printsTestes/](printsTestes/), separados por integrante.
 | Rafael | 3 e 4 | [IntelliJ](printsTestes/cenarios-03-04-rafael/01-red-intellij.png.png) · [GitHub Actions](printsTestes/cenarios-03-04-rafael/02-red-actions.png.png) |
 | Henrique | 5 e 6 | [IntelliJ](printsTestes/cenarios-05-06-henrique/01-red-intellij.png) · [GitHub Actions](printsTestes/cenarios-05-06-henrique/02-red-actions.png) |
 
-### GREEN — implementação mínima até os testes passarem
+### GREEN - implementação mínima até os testes passarem
 
 | Integrante | Cenários | Evidência |
 |---|---|---|
@@ -92,7 +92,7 @@ Os prints estão em [printsTestes/](printsTestes/), separados por integrante.
 
 Nesta fase a cobertura ainda tinha amarelo e vermelho, como mostram os prints do JaCoCo.
 
-### BLUE — refatoração com os testes passando e cobertura em 100%
+### BLUE - refatoração com os testes passando e cobertura em 100%
 
 Refatorações feitas nesta fase:
 
@@ -104,8 +104,8 @@ Refatorações feitas nesta fase:
 | Integrante | Cenários | Evidência |
 |---|---|---|
 | Matheus de Alcantara | 1 e 2 | [IntelliJ](printsTestes/cenarios-01-02-alcantara/05-blue-intellij.png) · [GitHub Actions](printsTestes/cenarios-01-02-alcantara/06-blue-actions.png) |
-| Rafael | 3 e 4 | [IntelliJ](printsTestes/cenarios-03-04-rafael/06-blue-intellij.png.png) · [JaCoCo](printsTestes/cenarios-03-04-rafael/07-blue-jacoco.png.png) |
-| Henrique | 5 e 6 | [IntelliJ](printsTestes/cenarios-05-06-henrique/06-blue-intellij.png) |
+| Rafael Silva | 3 e 4 | [IntelliJ](printsTestes/cenarios-03-04-rafael/06-blue-intellij.png.png) · [JaCoCo](printsTestes/cenarios-03-04-rafael/07-blue-jacoco.png.png) |
+| Henrique Bicudo | 5 e 6 | [IntelliJ](printsTestes/cenarios-05-06-henrique/06-blue-intellij.png) |
 
 **Resultado final: 43 testes, 100% de cobertura, sem vermelho nem amarelo.**
 
@@ -127,25 +127,6 @@ Para conferir localmente:
 ---
 
 ## 5. Arquitetura em camadas
-
-```text
-Front-end Vue.js / Swagger / Postman
-              |
-              v
-          Controller        <- recebe HTTP, valida DTO, devolve JSON
-              |
-              v
-           Service          <- regra de negócio, @Transactional, converte para DTO
-              |
-              v
-         Repository         <- Spring Data JPA
-              |
-              v
-     Domain (@Entity + VO)  <- regras do negócio, testadas via TDD
-              |
-              v
-       H2 / PostgreSQL
-```
 
 | Camada | Pacote | Classes |
 |---|---|---|
@@ -178,175 +159,3 @@ Com a aplicação no ar: **http://localhost:8080/swagger-ui.html**
 | `POST` | `/api/matriculas` | Matricula em um curso (`bonus: true` consome um crédito) |
 | `PUT` | `/api/matriculas/{id}/concluir` | Conclui a matrícula com a nota final |
 | `GET` | `/api/matriculas/usuario/{usuarioId}` | Lista as matrículas de um usuário |
-
-### Fluxo sugerido para demonstrar as regras
-
-```bash
-# 1) cria o usuário (nasce BASICO, com 0 créditos)
-curl -X POST http://localhost:8080/api/usuarios \
-  -H "Content-Type: application/json" \
-  -d '{"nome":"Matheus","email":"matheus@email.com","senha":"123456"}'
-
-# 2) cria o curso
-curl -X POST http://localhost:8080/api/cursos \
-  -H "Content-Type: application/json" \
-  -d '{"titulo":"Spring Boot Fundamentos","descricao":"Curso introdutorio"}'
-
-# 3) matricula
-curl -X POST http://localhost:8080/api/matriculas \
-  -H "Content-Type: application/json" \
-  -d '{"usuarioId":1,"cursoId":1,"bonus":false}'
-
-# 4) conclui com nota 8 -> cenário 1: ganha 3 créditos
-curl -X PUT http://localhost:8080/api/matriculas/1/concluir \
-  -H "Content-Type: application/json" \
-  -d '{"notaFinal":8.0}'
-
-# 5) confere os créditos
-curl http://localhost:8080/api/usuarios/1
-
-# 6) matrícula bônus -> cenário 5: consome um crédito
-curl -X POST http://localhost:8080/api/matriculas \
-  -H "Content-Type: application/json" \
-  -d '{"usuarioId":1,"cursoId":1,"bonus":true}'
-```
-
-Sem crédito, a API devolve **HTTP 400** com o aviso do cenário 6:
-
-```json
-{ "erro": "Creditos insuficientes", "status": 400 }
-```
-
----
-
-## 7. Front-end em Vue.js
-
-Servido pela própria aplicação em **http://localhost:8080/index.html**
-([index.html](src/main/resources/static/index.html)).
-
-Usa Vue 3 via CDN e consome os endpoints REST. Dá para criar usuário e curso, matricular,
-concluir com nota e ver os créditos e o plano mudarem na tela.
-
-![Front-end em Vue.js](evidencias/front-vue.png)
-
----
-
-## 8. Como executar
-
-### Opção A — Docker (aplicação + PostgreSQL + pgAdmin)
-
-```bash
-docker compose up --build
-```
-
-| Serviço | Endereço | Acesso |
-|---|---|---|
-| Aplicação | http://localhost:8080 | — |
-| Swagger | http://localhost:8080/swagger-ui.html | — |
-| PostgreSQL | `localhost:5432` | banco `gamificacao_db`, usuário `postgres`, senha `postgres` |
-| pgAdmin | http://localhost:5050 | `admin@admin.com` / `admin` |
-
-Para registrar o servidor no pgAdmin, use **Host: `postgres`** (é o nome do serviço dentro da
-rede do Compose — não use `localhost`), porta `5432`, banco `gamificacao_db`, usuário e senha
-`postgres`.
-
-### Opção B — local com H2 em memória
-
-```bash
-./mvnw spring-boot:run -Dspring-boot.run.profiles=h2
-```
-
-Console do H2 em **http://localhost:8080/h2-console**, com JDBC URL `jdbc:h2:mem:gamificacaodb`,
-usuário `sa` e senha em branco.
-
-### Opção C — local com PostgreSQL
-
-O profile padrão é `postgres`. Basta ter o banco `gamificacao_db` disponível em
-`localhost:5432` e rodar:
-
-```bash
-./mvnw spring-boot:run
-```
-
-As credenciais podem ser sobrescritas por variáveis de ambiente: `SPRING_DATASOURCE_URL`,
-`SPRING_DATASOURCE_USERNAME` e `SPRING_DATASOURCE_PASSWORD`.
-
----
-
-## 9. Evidências dos bancos
-
-### H2
-
-Console do H2 mostrando o usuário persistido com os 3 créditos ganhos ao concluir o curso
-com nota 8:
-
-![H2 Console](evidencias/h2-console.png)
-
-```sql
-SELECT u.ID, u.NOME, u.EMAIL, a.PLANO, a.CREDITOS_CURSOS, a.CURSOS_CONCLUIDOS_COM_SUCESSO
-FROM USUARIOS u JOIN ASSINATURAS a ON a.ID = u.ASSINATURA_ID;
-```
-
-### PostgreSQL via Docker
-
-A stack foi executada com `docker compose up --build`, subindo os três containers:
-aplicação, PostgreSQL e pgAdmin. As tabelas foram criadas pelo JPA e o fluxo do estudo de
-caso foi executado pela API contra o PostgreSQL.
-
-A saída completa do terminal está em
-[docker-compose-evidencia.txt](evidencias/docker-compose-evidencia.txt):
-
-```text
-NAME                   IMAGE              STATUS                    PORTS
-gamificacao-app        projeto-app        Up 11 minutes             0.0.0.0:8080->8080/tcp
-gamificacao-pgadmin    dpage/pgadmin4:9   Up 11 minutes             0.0.0.0:5050->80/tcp
-gamificacao-postgres   postgres:16        Up 11 minutes (healthy)   0.0.0.0:5432->5432/tcp
-```
-
-**pgAdmin conectado no container do PostgreSQL, com as 4 tabelas criadas pelo JPA:**
-
-![pgAdmin com as tabelas](evidencias/pgadmin-tabelas.png)
-
-**Consulta no pgAdmin mostrando o usuário com os créditos ganhos:**
-
-![pgAdmin com os dados](evidencias/pgadmin-query-dados.png)
-
-```sql
-SELECT u.id, u.nome, u.email, a.plano, a.creditos_cursos, a.cursos_concluidos_com_sucesso
-FROM usuarios u JOIN assinaturas a ON a.id = u.assinatura_id;
-```
-
-**Front-end Vue servido pelo container da aplicação, com os dados vindos do PostgreSQL:**
-
-![Front no Docker com PostgreSQL](evidencias/front-vue-docker-postgres.png)
-
-Outras consultas úteis no pgAdmin:
-
-```sql
-SELECT * FROM usuarios;
-SELECT * FROM assinaturas;
-SELECT * FROM cursos;
-SELECT * FROM matriculas;
-```
-
----
-
-## 10. Testes e integração contínua
-
-```bash
-./mvnw clean test     # roda os 43 testes e gera o relatorio de cobertura
-```
-
-O workflow [testes.yml](.github/workflows/testes.yml) roda a cada push e pull request,
-executa os testes e publica os relatórios do Surefire e do JaCoCo como artefatos.
-
-### Estrutura dos testes
-
-| Classe | O que cobre |
-|---|---|
-| `ConclusaoCursoTest` | Cenários BDD 1 e 2 |
-| `CursoEmAndamentoTest` | Cenários BDD 3 e 4 |
-| `DesbloqueioCursoTest` | Cenários BDD 5 e 6 |
-| `UsuarioTest`, `CursoTest`, `MatriculaTest`, `AssinaturaTest` | Regras e estado das entidades do domínio |
-| `NomeUsuarioTest`, `EmailUsuarioTest`, `SenhaCriptografadaTest`, `TituloCursoTest`, `DescricaoCursoTest` | Validações dos Value Objects |
-| `Grupo7PraticaAtddApplicationTests` | Sobe o contexto Spring |

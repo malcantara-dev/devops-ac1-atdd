@@ -23,9 +23,9 @@
             <button @click="criarUsuario">Criar usuário</button>
             <ul>
                 <li v-for="u in usuarios" :key="u.id">
-                    {{ u.id }} - {{ u.nome }} | {{ u.plano }} |
+                    {{ u.id }} - {{ u.nome }} |
                     {{ u.creditosCursos }} crédito(s) |
-                    {{ u.cursosConcluidosComSucesso }} concluído(s)
+                    aprovado em {{ u.cursosConcluidosComSucesso }} curso{{ u.cursosConcluidosComSucesso === 1 ? '' : 's' }}
                 </li>
             </ul>
         </div>
