@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Educacao Continuada Gamificada - Grupo 7</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+</head>
+<body>
+<div id="app" class="box">
+    <h1>Educação Continuada Gamificada</h1>
+    <p>Front-end em Vue.js consumindo a API do Grupo 7.</p>
+
+    <div class="grid">
+        <div class="card">
+            <h2>Usuários</h2>
+            <input v-model="usuario.nome" placeholder="Nome do aluno">
+            <button @click="criarUsuario">Criar usuário</button>
+            <button @click="listarUsuarios">Atualizar lista</button>
+            <ul>
+                <li v-for="u in usuarios" :key="u.id">
+                    {{ u.id }} - {{ u.nome }} | créditos: {{ u.creditosCursos }} | concluídos: {{ u.cursosConcluidosComSucesso }}
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>Cursos</h2>
+            <input v-model="curso.titulo" placeholder="Título do curso">
+            <button @click="criarCurso">Criar curso</button>
+            <button @click="listarCursos">Atualizar lista</button>
+            <ul>
+                <li v-for="c in cursos" :key="c.id">{{ c.id }} - {{ c.titulo }}</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="grid" style="margin-top:24px;">
+        <div class="card">
+            <h2>Matricular</h2>
+            <input v-model="matricula.usuarioId" placeholder="ID do usuário">
+            <input v-model="matricula.cursoId" placeholder="ID do curso">
+            <select v-model="matricula.bonus">
+                <option value="false">Curso do plano</option>
+                <option value="true">Curso bônus (consome 1 crédito)</option>
+            </select>
+            <button @click="matricular">Matricular</button>
+        </div>
+
+        <div class="card">
+            <h2>Notas</h2>
+            <input v-model="nota.matriculaId" placeholder="ID da matrícula">
+            <input v-model="nota.valor" placeholder="Nota de 0 a 10">
+            <button @click="enviarNota('concluir', 'Matrícula concluída')">Concluir curso</button>
+            <button @click="enviarNota('nota-parcial', 'Nota parcial registrada')">Registrar nota parcial</button>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+        <h2>Matrículas do usuário</h2>
+        <input v-model="consultaUsuarioId" placeholder="ID do usuário">
+        <button @click="listarMatriculas">Listar matrículas</button>
+        <ul>
+            <li v-for="m in matriculas" :key="m.id">
+                {{ m.id }} - {{ m.cursoTitulo }} | status: {{ m.status }} | nota final: {{ m.notaFinal ?? '-' }} |
+                nota parcial: {{ m.notaParcial ?? '-' }} | bônus: {{ m.bonus }}
+            </li>
+        </ul>
+    </div>
+
+    <p><strong>{{ mensagem }}</strong></p>
+    <p><a href="/swagger-ui.html" target="_blank">Abrir Swagger</a> | <a href="/h2-console" target="_blank">Abrir console H2</a></p>
+</div>
+<script src="/js/app.js"></script>
+</body>
+</html>
