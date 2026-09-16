@@ -1,0 +1,44 @@
+===============================================================
+ Evidencia: aplicacao rodando via Docker Compose com PostgreSQL
+ Data: 16/09/2026
+===============================================================
+
+$ docker compose ps
+NAME                   IMAGE              STATUS                   PORTS
+gamificacao-app        projeto-app        Up 8 minutes             0.0.0.0:18080->8080/tcp, [::]:18080->8080/tcp
+gamificacao-pgadmin    dpage/pgadmin4:9   Up 8 minutes             0.0.0.0:5050->80/tcp, [::]:5050->80/tcp
+gamificacao-postgres   postgres:16        Up 8 minutes (healthy)   0.0.0.0:15432->5432/tcp, [::]:15432->5432/tcp
+
+$ docker exec gamificacao-postgres psql -U postgres -d gamificacao_db -c '\dt'
+            List of relations
+ Schema |    Name     | Type  |  Owner   
+--------+-------------+-------+----------
+ public | assinaturas | table | postgres
+ public | cursos      | table | postgres
+ public | matriculas  | table | postgres
+ public | usuarios    | table | postgres
+(4 rows)
+
+
+$ SELECT usuario + assinatura
+ id |  nome   |       email       | plano  | creditos_cursos | cursos_concluidos_com_sucesso 
+----+---------+-------------------+--------+-----------------+-------------------------------
+  1 | Matheus | matheus@email.com | BASICO |               2 |                             1
+(1 row)
+
+$ SELECT matriculas
+ id | usuario_id | curso_id |    status    | nota_final | bonus 
+----+------------+----------+--------------+------------+-------
+  1 |          1 |        1 | CONCLUIDO    |          8 | f
+  2 |          1 |        2 | EM_ANDAMENTO |          0 | t
+(2 rows)
+
+
+Log da aplicacao conectando no PostgreSQL:
+2026-09-16T20:36:22.843Z  WARN 1 --- [Grupo_7_PraticaATDD] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-09-16T20:36:46.788Z  INFO 1 --- [Grupo_7_PraticaATDD] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2026-09-16T20:36:46.891Z  INFO 1 --- [Grupo_7_PraticaATDD] [           main] o.e.g.Grupo7PraticaAtddApplication       : Started Grupo7PraticaAtddApplication in 54.338 seconds (process running for 58.681)
+
+OBS.: nesta maquina as portas 8080 e 5432 do host ja estavam ocupadas,
+entao o compose foi executado com as portas 18080 e 15432 no host.
+A rede interna do compose e o docker-compose.yml do projeto sao os mesmos.

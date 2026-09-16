@@ -287,10 +287,40 @@ SELECT u.ID, u.NOME, u.EMAIL, a.PLANO, a.CREDITOS_CURSOS, a.CURSOS_CONCLUIDOS_CO
 FROM USUARIOS u JOIN ASSINATURAS a ON a.ID = u.ASSINATURA_ID;
 ```
 
-### PostgreSQL
+### PostgreSQL via Docker
 
-A aplicação sobe no PostgreSQL pelo perfil padrão. Consultas úteis no pgAdmin, depois de
-subir a stack com `docker compose up --build`:
+A stack foi executada com `docker compose up --build`, subindo os três containers:
+aplicação, PostgreSQL e pgAdmin. As tabelas foram criadas pelo JPA e o fluxo do estudo de
+caso foi executado pela API contra o PostgreSQL.
+
+A saída completa do terminal está em
+[docker-compose-evidencia.txt](evidencias/docker-compose-evidencia.txt):
+
+```text
+NAME                   IMAGE              STATUS                    PORTS
+gamificacao-app        projeto-app        Up 11 minutes             0.0.0.0:8080->8080/tcp
+gamificacao-pgadmin    dpage/pgadmin4:9   Up 11 minutes             0.0.0.0:5050->80/tcp
+gamificacao-postgres   postgres:16        Up 11 minutes (healthy)   0.0.0.0:5432->5432/tcp
+```
+
+**pgAdmin conectado no container do PostgreSQL, com as 4 tabelas criadas pelo JPA:**
+
+![pgAdmin com as tabelas](evidencias/pgadmin-tabelas.png)
+
+**Consulta no pgAdmin mostrando o usuário com os créditos ganhos:**
+
+![pgAdmin com os dados](evidencias/pgadmin-query-dados.png)
+
+```sql
+SELECT u.id, u.nome, u.email, a.plano, a.creditos_cursos, a.cursos_concluidos_com_sucesso
+FROM usuarios u JOIN assinaturas a ON a.id = u.assinatura_id;
+```
+
+**Front-end Vue servido pelo container da aplicação, com os dados vindos do PostgreSQL:**
+
+![Front no Docker com PostgreSQL](evidencias/front-vue-docker-postgres.png)
+
+Outras consultas úteis no pgAdmin:
 
 ```sql
 SELECT * FROM usuarios;
