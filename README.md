@@ -1,9 +1,9 @@
-# Educação Continuada Gamificada - Grupo 7
+# AC1 ATDD Grupo 7
 
-Projeto final de ATDD (BDD + TDD) em Spring Boot.
+Projeto AC1 de ATDD em Spring Boot e Docker.
 
 O ciclo foi conduzido de fora para dentro: primeiro as User Stories, depois os cenários BDD
-como critérios de aceitação, depois o TDD (RED, GREEN, BLUE) sobre o pacote `domain` e, por
+como critérios de aceitação, depois o TDD (RED, GREEN, BLUE) sobre o pacote domain e, por
 último, as camadas de aplicação (Entity, Repository, Service, DTO, Controller), o Swagger,
 o front-end em Vue.js e a execução via Docker.
 
